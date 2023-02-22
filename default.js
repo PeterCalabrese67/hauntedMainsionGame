@@ -64,9 +64,44 @@ function showRoom() {
       });
     }
   }
+  function describeRoom(room) {
+    //console.log(rooms[room].name);
+    console.log(rooms[room].description);
+    if (rooms[room].items.length > 0) {
+      console.log("You see the following items in the room:");
+      rooms[room].items.forEach((item) => {
+        console.log(objects[item].name);
+      });
+    }
+    const exits = [...rooms[room].exits.keys()].join(", ");
+    console.log(`Exits: ${exits}`);
+  }
+
+  function processCommand(command) {
+    const parts = command.split(" ");
+    const action = parts[0];
+    const target = parts[1];
   
+    if (!action) {
+      console.log("I don't understand what you want me to do.");
+    } else if (action === "look") {
+      describeRoom(currentRoom);
+    } else if (action === "go") {
+      const newRoom = currentRoom.getExit(target);
+      if (newRoom === null) {
+        console.log("You can't go that way.");
+      } else {
+        currentRoom = newRoom;
+        describeRoom(currentRoom);
+      }
+    } else {
+      console.log("I don't know how to do that.");
+    }
+  }
+
   // Parse user input
   function parseInput(input) {
+    console.log ("in parse");
     const command = input.trim().toLowerCase();
     const parts = command.split(' ');
     const verb = parts[0];
@@ -128,6 +163,8 @@ function go(direction) {
     }
 }
 
+
+/*
 const readline = require('readline');
 const rl = readline.createInterface({
   input: process.stdin,
@@ -143,5 +180,17 @@ rl.on('line', (input) => {
 console.log("Welcome to the Haunted Mansion adventure game!");
 showRoom();
 rl.prompt();
-
+*/
+function main() {
+  console.log("Welcome to the Haunted Mansion! You are standing in the foyer.");
+  describeRoom(currentRoom);
+  const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+  });
+  rl.on("line", (input) => {
+    processCommand(input);
+  });
+}
 //test commit
+main();
