@@ -1,4 +1,4 @@
-
+const readline = require("readline");
 
 
 
@@ -187,14 +187,24 @@ rl.prompt();
 */
 function main() {
   console.log("Welcome to the Haunted Mansion! You are standing in the foyer.");
-  describeRoom(currentRoom);
+  //describeRoom(currentRoom);
   const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout
   });
-  rl.on("line", (input) => {
-    processCommand(input);
-  });
+
+
+
+  while (true) {
+    describeRoom(currentRoom);
+    
+    rl.question("What do you want to do? ", answer => {
+      const result = processCommand(answer);
+      //room = result.room;
+     // console.log(result.message);
+    });
+  }
+ 
 }
 //test commit
 main();
