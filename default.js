@@ -73,7 +73,11 @@ function showRoom() {
         console.log(objects[item].name);
       });
     }
-    const exits = [...rooms[room].exits.keys()].join(", ");
+
+    const currentRoom = rooms[room];
+   //const exits = [...currentRoom.exits.keys()].join(", ");
+   const exits = Object.keys(currentRoom.exits).join(", ");
+    //const exits = [...rooms[room].exits.keys()].join(", ");
     console.log(`Exits: ${exits}`);
   }
 
