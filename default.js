@@ -144,4 +144,4 @@ console.log("Welcome to the Haunted Mansion adventure game!");
 showRoom();
 rl.prompt();
 
-
+//test commit
